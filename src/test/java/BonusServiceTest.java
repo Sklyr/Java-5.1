@@ -15,10 +15,10 @@ class BonusServiceTest {
     }
 
     @org.junit.jupiter.api.Test
-    void shouldCalculateForNotRegisteredAndOverLimit() {
+    void shouldCalculateForRegisteredAndOverLimit() {
         BonusService service = new BonusService();
-        long amount = 1_000_000_60;
-        boolean registered = false;
+        long amount = 1_000_000_50;
+        boolean registered = true;
         long expected = 500;
 
         long actual = service.calculate(amount, registered);
@@ -28,9 +28,9 @@ class BonusServiceTest {
     @org.junit.jupiter.api.Test
     void shouldCalculateForNotRegisteredAndUnderLimit() {
         BonusService service = new BonusService();
-        long amount = 1000;
+        long amount = 100000;
         boolean registered = false;
-        long expected = 500;
+        long expected = 10;
 
         long actual = service.calculate(amount, registered);
         assertEquals(expected, actual);
@@ -38,10 +38,32 @@ class BonusServiceTest {
     }
 
     @org.junit.jupiter.api.Test
-    void shouldCalculateForRegisteredAndOverLimit() {
+    void shouldCalculateForNotRegisteredAndOverLimit() {
         BonusService service = new BonusService();
-        long amount = 1_000_000_50;
+        long amount = 7000000;
+        boolean registered = false;
+        long expected = 500;
+
+        long actual = service.calculate(amount, registered);
+        assertEquals(expected, actual);
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldCalculateForRegisteredAndEqualLimit() {
+        BonusService service = new BonusService();
+        long amount = 1700000;
         boolean registered = true;
+        long expected = 500;
+
+        long actual = service.calculate(amount, registered);
+        assertEquals(expected, actual);
+    }
+
+    @org.junit.jupiter.api.Test
+    void shouldCalculateForNotRegisteredAndEqualLimit() {
+        BonusService service = new BonusService();
+        long amount = 5000000;
+        boolean registered = false;
         long expected = 500;
 
         long actual = service.calculate(amount, registered);
